@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual da !Burrice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6;
+    --ink:#18160F;
+    --muted:#68635A;
+    --line:#E7E2D8;
+    --brand:#F2B705;
+    --brand-ink:#18160F;
+    --danger:#C4441E;
+    --bg-dark:#151310;
+    --ink-dark:#F4F1E9;
+    --muted-dark:#948E80;
+    --line-dark:#2C2A24;
+
+    --sp-1:4px;
+    --sp-2:8px;
+    --sp-3:12px;
+    --sp-4:16px;
+    --sp-5:24px;
+    --sp-6:32px;
+    --sp-7:48px;
+    --sp-8:64px;
+    --sp-9:96px;
+
+    --radius:6px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-weight:400;
+    letter-spacing:0.01em;
+    line-height:0.95;
+    margin:0;
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  ::selection{background:var(--brand);color:var(--brand-ink);}
+
+  :focus-visible{
+    outline:2px solid var(--brand);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding-left:var(--sp-5);
+    padding-right:var(--sp-5);
+  }
+  @media(min-width:720px){
+    .wrap{padding-left:var(--sp-7);padding-right:var(--sp-7);}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(250,249,246,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:var(--sp-4) 0;
+  }
+  .logo{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px;
+    display:flex;
+    align-items:baseline;
+    gap:2px;
+  }
+  .logo .bang{color:var(--brand-ink); background:var(--brand); padding:0 6px; border-radius:3px;}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    border-radius:var(--radius);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:12px 22px;
+    min-height:44px;
+    border:1px solid transparent;
+    cursor:pointer;
+    text-decoration:none;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--ink); color:var(--bg);}
+  .btn-primary:hover{background:#000;}
+  .btn-secondary{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn-secondary:hover{background:var(--ink); color:var(--bg);}
+  .btn-tertiary{background:transparent; color:var(--muted); padding:12px 4px; font-weight:500;}
+  .btn-tertiary:hover{color:var(--ink);}
+  .btn-tertiary:hover .arrow{transform:translateX(3px);}
+  .arrow{transition:transform .15s ease;}
+  .btn-nav{padding:9px 16px; min-height:38px; font-size:14px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:var(--sp-8) 0 var(--sp-7);
+  }
+  .kicker{
+    color:var(--muted);
+    font-size:15px;
+    max-width:34ch;
+    margin-bottom:var(--sp-4);
+  }
+  h1.title{
+    font-size:clamp(52px, 11vw, 118px);
+    max-width:14ch;
+  }
+  .lede{
+    margin-top:var(--sp-5);
+    max-width:52ch;
+    font-size:19px;
+    color:var(--muted);
+  }
+  .hero-actions{
+    margin-top:var(--sp-6);
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:var(--sp-4);
+  }
+
+  /* switch */
+  .switch-row{
+    margin-top:var(--sp-8);
+    display:flex;
+    align-items:center;
+    gap:var(--sp-4);
+    padding:var(--sp-4);
+    border:1px solid var(--line);
+    border-radius:8px;
+    max-width:460px;
+  }
+  .switch{
+    position:relative;
+    width:56px; height:32px;
+    background:var(--danger);
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    flex:none;
+    transition:background .2s ease;
+  }
+  .switch::after{
+    content:"";
+    position:absolute;
+    top:3px; left:3px;
+    width:26px; height:26px;
+    background:#fff;
+    border-radius:50%;
+    transition:transform .2s ease;
+  }
+  .switch[aria-pressed="true"]{background:var(--brand);}
+  .switch[aria-pressed="true"]::after{transform:translateX(24px);}
+  .switch-label{font-size:15px;}
+  .switch-label strong{display:block; font-size:16px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:var(--sp-8) 0;}
+  .section-head{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-3);
+    max-width:60ch;
+    margin-bottom:var(--sp-7);
+  }
+  .eyebrow-num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:15px;
+    color:var(--muted);
+  }
+  h2.section-title{font-size:clamp(32px,5vw,48px);}
+  .section-sub{color:var(--muted); font-size:16px; max-width:48ch;}
+
+  /* ---------- SYMPTOM GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media(min-width:720px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .card{
+    background:var(--bg);
+    padding:var(--sp-6);
+  }
+  .card h3{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    line-height:1.3;
+    margin-bottom:var(--sp-2);
+  }
+  .card p{color:var(--muted); font-size:15.5px;}
+  .card details{margin-top:var(--sp-4);}
+  .card summary{
+    list-style:none;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .card summary::-webkit-details-marker{display:none;}
+  .card summary::before{content:"+"; color:var(--brand-ink); background:var(--brand); width:18px; height:18px; border-radius:4px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; line-height:1;}
+  .card details[open] summary::before{content:"–";}
+  .antidote{
+    margin-top:var(--sp-3);
+    padding-top:var(--sp-3);
+    border-top:1px solid var(--line);
+    font-size:15px;
+    color:var(--ink);
+  }
+  .antidote b{font-weight:700;}
+
+  /* ---------- DARK QUIZ ---------- */
+  .dark{
+    background:var(--bg-dark);
+    color:var(--ink-dark);
+  }
+  .dark .section-sub{color:var(--muted-dark);}
+  .dark .eyebrow-num{color:var(--brand);}
+  .check-list{
+    display:flex;
+    flex-direction:column;
+    border-top:1px solid var(--line-dark);
+    max-width:640px;
+  }
+  .check-item{
+    display:flex;
+    align-items:center;
+    gap:var(--sp-4);
+    padding:var(--sp-5) 0;
+    border-bottom:1px solid var(--line-dark);
+    cursor:pointer;
+  }
+  .check-box{
+    flex:none;
+    width:24px; height:24px;
+    border:1.5px solid var(--muted-dark);
+    border-radius:4px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .check-item.on .check-box{background:var(--brand); border-color:var(--brand);}
+  .check-box svg{display:none; width:14px; height:14px;}
+  .check-item.on .check-box svg{display:block;}
+  .check-text{font-size:16px;}
+  .check-result{
+    margin-top:var(--sp-6);
+    font-size:15px;
+    color:var(--muted-dark);
+  }
+  .check-result strong{color:var(--brand); font-size:17px;}
+
+  /* ---------- CLOSE / CTA ---------- */
+  .close-actions{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:var(--sp-5);
+    margin-top:var(--sp-6);
+  }
+
+  /* ---------- DESIGN NOTES ---------- */
+  .notes{
+    border-top:1px solid var(--line);
+    padding:var(--sp-7) 0;
+  }
+  .notes summary{
+    cursor:pointer;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px;
+    color:var(--muted);
+  }
+  .notes[open] summary{color:var(--ink); margin-bottom:var(--sp-5);}
+  .notes-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:var(--sp-6);
+    margin-top:var(--sp-5);
+  }
+  @media(min-width:720px){
+    .notes-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  .notes-grid h4{font-size:13px; text-transform:none; color:var(--ink); margin-bottom:var(--sp-2); font-weight:700;}
+  .notes-grid p{font-size:13.5px; color:var(--muted); line-height:1.5;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:var(--sp-5) 0 var(--sp-7);
+    color:var(--muted);
+    font-size:13.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">manual da<span class="bang">!</span>burrice</div>
+    <a href="#diagnostico" class="btn btn-primary btn-nav">Ver sintomas</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Um guia curto e prático — todos, deem a mãozinha e vamos todos juntos usar a cabecinha.</p>
+    <h1 class="title">Manual da <span style="color:var(--brand)">!</span>Burrice</h1>
+    <p class="lede">Burrice, aqui, não é falta de inteligência. É repetir a mesma decisão ruim porque ninguém parou pra nomear ela. Este manual nomeia oito.</p>
+
+    <div class="hero-actions">
+      <a href="#diagnostico" class="btn btn-primary">Começar o diagnóstico</a>
+      <a href="#teste" class="btn btn-secondary">Fazer o teste rápido</a>
+    </div>
+
+    <div class="switch-row">
+      <button class="switch" id="modeSwitch" aria-pressed="false" aria-label="Alternar modo burrice"></button>
+      <div class="switch-label">
+        <strong id="switchTitle">Modo burrice: ligado</strong>
+        <span id="switchDesc" style="color:var(--muted)">Decisões no automático, sem checar nada.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagnostico">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow-num">01</span>
+      <h2 class="section-title">Oito jeitos de ser burro sem perceber (o que já é burrice...)</h2>
+      <p class="section-sub">Clique em cada um pra ver o antídoto. Você provavelmente reconhece pelo menos três.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <h3>Ter medo de errar</h3>
+        <p>Se você não sabe algo, é impossível não errar. Pensa, porra.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> tente, tente, e tente novamente. Por mais redundante que seja, errar não é um erro.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Confiar 100% na memória</h3>
+        <p>Nenhuma lembrança é tão boa quanto uma anotação de dez segundos.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> anote tudo que tiver prazo, valor ou nome de pessoa. Sem exceção.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Não perguntar</h3>
+        <p>Ficar quieto sem entender custa mais caro do que parecer que não sabe.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> pergunte no minuto em que a dúvida aparece, antes que ela vire retrabalho.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Prometer sem calcular o tempo</h3>
+        <p>Você aceita prazos otimistas contando com um dia perfeito que nunca chega.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> dobre sua primeira estimativa antes de prometer qualquer prazo.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Ignorar os avisos do corpo</h3>
+        <p>Sono, dor e cansaço são notificações, não sugestões.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> trate o sono como reunião marcada — não cancelável de última hora.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Comparar seu bastidor com o palco alheio</h3>
+        <p>Você compara o seu dia real com a versão editada do dia de outra pessoa.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> use rede social pra buscar coisas, não pra se avaliar.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Não checar antes de enviar</h3>
+        <p>Cinco segundos de revisão evitam cinco dias de constrangimento.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> releia em voz baixa antes de clicar em enviar. Sempre.</div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h3>Insistir em vez de mudar de método</h3>
+        <p>Fazer a mesma coisa de novo e esperar um resultado diferente.</p>
+        <details>
+          <summary>Ver antídoto</summary>
+          <div class="antidote"><b>Antídoto:</b> se não funcionou duas vezes, troque a abordagem — não o esforço.</div>
+        </details>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="teste" class="dark">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow-num">02</span>
+      <h2 class="section-title">Teste das últimas 24 horas</h2>
+      <p class="section-sub">Marque o que aconteceu com você hoje. Sem julgamento, só um número.</p>
+    </div>
+
+    <div class="check-list" id="checkList">
+      <div class="check-item">
+        <div class="check-box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#151310" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="check-text">Pedi pronto pra IA ao invés de tentar</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#151310" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="check-text">Confiei na memória em vez de anotar</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#151310" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="check-text">Fiquei em dúvida e não perguntei</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#151310" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="check-text">Enviei algo sem reler</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4.5" stroke="#151310" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <span class="check-text">Ignorei sono ou cansaço pra continuar</span>
+      </div>
+    </div>
+
+    <p class="check-result" id="checkResult">0 de 5 — clique nos itens acima.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow-num">03</span>
+      <h2 class="section-title">O manual não muda sozinho</h2>
+      <p class="section-sub">Escolha um item da lista acima e aplique só ele por uma semana. Não os oito.</p>
+    </div>
+    <div class="close-actions">
+      <a href="#diagnostico" class="btn btn-primary">Escolher um antídoto</a>
+      <button class="btn btn-secondary" id="saveBtn">Salvar para depois</button>
+      <a href="#notas" class="btn btn-tertiary">Sobre este projeto <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <details class="notes" id="notas">
+    <summary>Notas de design deste site</summary>
+    <div class="notes-grid">
+      <div>
+        <h4>Less is more</h4>
+        <p>Oito cartões, um antídoto por vez, escondido até ser pedido. Um único CTA primário por seção.</p>
+      </div>
+      <div>
+        <h4>Cor</h4>
+        <p>Base em preto e branco, um único amarelo de destaque aplicado só a elementos interativos e ao estado ligado do switch.</p>
+      </div>
+      <div>
+        <h4>Layout e espaçamento</h4>
+        <p>Escala de espaçamento fixa, grade de dois blocos, hierarquia marcada por contraste entre seção clara e escura.</p>
+      </div>
+      <div>
+        <h4>Tipografia e botões</h4>
+        <p>Duas famílias — Bebas Neue para título, Inter para o resto — e três pesos de botão: primário, secundário e terciário.</p>
+      </div>
+    </div>
+  </details>
+</div>
+
+<footer>
+  <div class="wrap">Manual da !Burrice — projeto de estudo de UI/UX.</div>
+</footer>
+
+<script>
+  const sw = document.getElementById('modeSwitch');
+  const swTitle = document.getElementById('switchTitle');
+  const swDesc = document.getElementById('switchDesc');
+  sw.addEventListener('click', () => {
+    const on = sw.getAttribute('aria-pressed') === 'true';
+    sw.setAttribute('aria-pressed', String(!on));
+    if(!on){
+      swTitle.textContent = 'Modo burrice: desligado';
+      swDesc.textContent = 'Uma pausa de vinte segundos antes de decidir.';
+    } else {
+      swTitle.textContent = 'Modo burrice: ligado';
+      swDesc.textContent = 'Decisões no automático, sem checar nada.';
+    }
+  });
+
+  const items = document.querySelectorAll('.check-item');
+  const result = document.getElementById('checkResult');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('on');
+      const count = document.querySelectorAll('.check-item.on').length;
+      const msgs = {
+        0: '0 de 5 — clique nos itens acima.',
+        1: '1 de 5 — comum, escolha um antídoto e siga.',
+        2: '2 de 5 — dá pra corrigir com uma regra por vez.',
+        3: '3 de 5 — vale escolher só uma pra essa semana.',
+        4: '4 de 5 — dia puxado. Comece pelo sono.',
+        5: '5 de 5 — sem drama: pegue o item mais fácil da lista e comece amanhã.'
+      };
+      result.innerHTML = msgs[count].replace(/^(\d)/, '<strong>$1</strong>');
+    });
+  });
+
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.addEventListener('click', () => {
+    saveBtn.textContent = 'Salvo nos favoritos (Ctrl/Cmd+D)';
+    setTimeout(() => { saveBtn.textContent = 'Salvar para depois'; }, 2500);
+  });
+</script>
+
+</body>
+</html>
